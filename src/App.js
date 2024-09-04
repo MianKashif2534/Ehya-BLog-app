@@ -1,5 +1,5 @@
 import './App.css';
-import Homepage from './pages/Homepage'
+import Homepage from './pages/home/Homepage'
 function App() {
   return (
     <div className='font-opensans'>
