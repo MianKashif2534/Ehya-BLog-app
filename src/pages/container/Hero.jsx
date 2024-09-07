@@ -4,20 +4,21 @@ import { IoSearch } from "react-icons/io5";
 
 function Hero() {
   return (
-    <section className="container mx-auto flex flex-col px-5 py-5 lg:flex-row">
+    <section className="container mx-auto flex flex-col px-5 py-5 lg:flex-row lg:bg-white">
       <div className="mt-10 lg:w-1/2">
         <h1 className="font-roboto text-3xl text-center font-bold text-dark-soft md:text-5xl lg:text-4xl xl:text-5xl lg:text-left lg:max-w-[540px]">
-          Read the most interesting articles
+          Read the most 
+          interesting articles
         </h1>
         <p className="text-dark-light mt-4 text-center md:text-xl lg:text-base xl:text-xl lg:text-left">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua
         </p>
-        <div className="flex flex-col gap-y-2.5 rounded-lg mt-10 lg:mt-8 relative">
+        <div className="flex flex-col gap-y-2.5 rounded-lg mt-10 lg:mt-6 relative">
           <div className="relative flex items-center">
             <IoSearch className="absolute left-3 text-gray-500 w-6 h-6 cursor-pointer" />
             <input
-              className="lg:pl-20 pl-10 pr-24 py-2 rounded-lg placeholder:font-bold font-semibold text-dark-soft placeholder:text-[#959EAD] w-full placeholder:italic focus:outline-none shadow-[2px_-1px_50px_8px_rgba(204,204,204,0.51)] md:py-4"
+              className="lg:pl-20 pl-10 pr-24 py-2 rounded-lg  placeholder:font-bold font-semibold text-dark-soft placeholder:text-[#959EAD] w-full placeholder:italic focus:outline-none shadow-[2px_-1px_50px_8px_rgba(204,204,204,0.51)] md:py-4"
               type="text"
               placeholder="Search article"
             />
@@ -26,7 +27,7 @@ function Hero() {
             </button>
           </div>
         </div>
-        <div className="flex mt-4 flex-col lg:flex-row lg:items-start lg:flex-nowrap lg:gap-x-4 lg:mt-7">
+        <div className="flex mt-4 flex-col lg:flex-row lg:items-start lg:flex-nowrap lg:gap-x-2 lg:mt-6 xl:mt-10">
           <span className="text-dark-light font-semibold italic mt-2 lg:mt-4 lg:text-sm xl:text-base">
             Popular Tags:
           </span>

@@ -12,13 +12,13 @@ const navItemInfo = [
 ];
 
 const NavItem = ({ item }) => {
-  const [dropdown, setDropdown] = useState(false)
+  const [dropdown, setDropdown] = useState(false);
 
-  const dropdownHandler = ()=>{
-    setDropdown((currState)=>{
-      return (!currState)
-    })
-  }
+  const dropdownHandler = () => {
+    setDropdown((currState) => {
+      return !currState;
+    });
+  };
   return (
     <li className="relative group">
       {item.type === "link" ? (
@@ -32,11 +32,18 @@ const NavItem = ({ item }) => {
         </>
       ) : (
         <div className="flex items-center flex-col">
-          <button className="px-3 py-2 flex gap-x-1 items-center" onClick={dropdownHandler}>
+          <button
+            className="px-3 py-2 flex gap-x-1 items-center"
+            onClick={dropdownHandler}
+          >
             <span className="">{item.name}</span>
             <IoMdArrowDropdown />
           </button>
-          <div className={`${dropdown? "block" : "hidden"} lg:hidden transition-all duration-500 pt-4 lg:absolute lg:right-0 lg:bottom-0 lg:transform lg:translate-y-full lg:group-hover:block w-max`}>
+          <div
+            className={`${
+              dropdown ? "block" : "hidden"
+            } lg:hidden transition-all duration-500 pt-4 lg:absolute lg:right-0 lg:bottom-0 lg:transform lg:translate-y-full lg:group-hover:block w-max`}
+          >
             <ul className="bg-dark-soft lg:bg-transparent flex flex-col shadow-lg rounded-lg overflow-hidden cursor-pointer">
               {item.items.map((page, index) => {
                 return (
@@ -65,8 +72,8 @@ function Header() {
   };
 
   return (
-    <section className="sticky right-0 left-0 top-0 z-50">
-      <header className=" container px-5 py-3 flex justify-between mx-auto">
+    <section className="sticky right-0 left-0 top-0 z-50 bg-slate-100">
+      <header className=" container px-5 py-3 flex justify-between mx-auto ">
         <div>
           <img
             className="w-16 lg:w-full lg:mt-3"

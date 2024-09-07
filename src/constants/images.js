@@ -1,12 +1,18 @@
 //images.js
-import Logo from '../assets/Logo.svg'
-import HeroImage from '../assets/HeroImage.svg'
+import Logo from "../assets/Logo.svg";
+import HeroImage from "../assets/HeroImage.svg";
+import post from "../assets/post/post1.jpg";
+import postProfile from "../assets/post/post-profile.svg";
+import Ctaimage from "../assets/post/Ctaimage.jpg";
+import post1image from '../assets/post/post1image.png'
 
 const images = {
-    Logo,
-    HeroImage
-}
+  Logo,
+  HeroImage,
+  post,
+  postProfile,
+  Ctaimage,
+  post1image
+};
 
-export default images
-
-
+export default images;
