@@ -5,6 +5,8 @@ import images from "../../constants/images";
 import { Link } from "react-router-dom";
 import SuggestedPost from "./container/SuggestedPost";
 import CommentContainer from "../../components/commentsSection/CommentContainer";
+import SocialShareButtons from "../../components/SocialShareButtons";
+
 
 function ArticlesDetails() {
   const breadCrumbsData = [
@@ -54,7 +56,7 @@ function ArticlesDetails() {
     <Mainlayout>
       <section className="container mx-auto max-w-5xl flex flex-col p-5 lg:gap-x-5">
         {/* Article and Suggested Posts */}
-        <div className="flex flex-col lg:flex-row lg:items-start">
+        <div className="flex flex-col lg:flex-row lg:items-start gap-x-10">
           <article className="flex-1">
             <BreadCrumb data={breadCrumbsData} />
             <img className="w-full rounded-lg" src={images.post} alt="" />
@@ -76,12 +78,26 @@ function ArticlesDetails() {
               </p>
             </div>
           </article>
-          <SuggestedPost
-            header="Latest Article"
-            post={postData}
-            tags={tags}
-            className={"mt-10 lg:mt-0 lg:max-w-xs"}
-          />
+          <div>
+            <SuggestedPost
+              header="Latest Article"
+              post={postData}
+              tags={tags}
+              className={"mt-10 lg:mt-0 lg:max-w-xs"}
+            />
+            <div className="mt-5">
+              <h2 className="font-roboto text-dark-hard mb-2 font-medium md:text-xl">
+                Share on:{" "}
+              </h2>
+              {/* encodeURI convert invalid characters into utf-8 format */}
+              <SocialShareButtons
+                url={encodeURI("https://developers.facebook.com/")}
+                title={encodeURIComponent(
+                  "Client and server side rendering explanation"
+                )}
+              />
+            </div>
+          </div>
         </div>
         {/* Comments Section */}
         <CommentContainer className={"mt-10"} loginUserId="a" />

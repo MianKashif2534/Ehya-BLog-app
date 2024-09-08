@@ -70,20 +70,21 @@ function CommentContainer({ className, loginUserId }) {
       <CommentForm
         btnLable={"Send"}
         formSubmitHandler={(value) => addCommentHandler(value)}
-      />
+        />
       <div className="space-y-5 mt-5">
         {mainComments.map((comment) => {
           return (
             <Comments
-              key={comment._id}
-              comment={comment}
-              loginUserId={loginUserId}
-              affectedComment={affectedComment}
-              setAffectedComment={setAffectedComment}
-              addComment={addCommentHandler}
-              updateComment={updateCommentHandler}
-              deleteComment={deleteCommentHandler}
-              replies={getRepliesHandler(comment._id)}
+            key={comment._id}
+            comment={comment}
+            loginUserId={loginUserId}
+            affectedComment={affectedComment}
+            setAffectedComment={setAffectedComment}
+            addComment={addCommentHandler}
+            updateComment={updateCommentHandler}
+            deleteComment={deleteCommentHandler}
+            replies={getRepliesHandler(comment._id)}
+            // loginUserId={loginUserId}
             />
           );
         })}

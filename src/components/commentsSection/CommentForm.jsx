@@ -23,7 +23,7 @@
             value={value}
             placeholder="Leave your comment here..."
             />
-            <div className="flex items-center gap-x-3 pt-2">
+            <div className="flex items-center flex-wrap gap-x-3 pt-2 flex-col-reverse gap-y-2 min-[420px]:flex-row">
             {formCancelHandler && (
                 <button onClick={formCancelHandler} className="px-4 py-2 border border-red-500 text-red-500 font-bold rounded-lg">
                 Cancel

@@ -6,7 +6,7 @@ function SuggestedPost({ className, header, post = [] , tags}) {
   return (
     <>
       <div
-        className={`w-full shadow-[0px_0px_6px_1px_#00000024] rounded-lg p-4 md:p-8 ${className}  lg:ml-10`}
+        className={`w-full shadow-[0px_0px_6px_1px_#00000024] rounded-lg p-4 md:p-8 ${className}  `}
       >
         <h1 className="font-bold font-roboto text-dark-hard md:text-xl">{header}</h1>
         <div className="grid gap-y-7 mt-5 md:grid-cols-2 md:gap-x-2 lg:grid-cols-1">
