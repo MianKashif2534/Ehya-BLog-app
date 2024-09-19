@@ -5,6 +5,8 @@ import { FaTrashCan } from "react-icons/fa6";
 import { LuMessageSquare } from "react-icons/lu";
 import { FaPencilAlt } from "react-icons/fa";
 import CommentForm from "./CommentForm";
+import { stables } from "../../constants";
+
 export default function Comments({
   comment,
   loginUserId,
@@ -16,7 +18,7 @@ export default function Comments({
   deleteComment,
   replies,
 }) {
-  const userLoggedIn = Boolean(loginUserId);
+  // const userLoggedIn = Boolean(loginUserId);
   const commentBelongsToUser = loginUserId === comment.user._id;
   const isReplying =
     affectedComment &&
@@ -33,11 +35,17 @@ export default function Comments({
       <div className="flex flex-nowrap items-start gap-x-3 bg-[#F2F4F5] rounded-lg p-3">
         <img
           className="w-9 h-9 object-cover rounded-full"
-          src={images.postProfile}
+          src={
+            comment.user.avatar
+              ? stables.UPLOAD_FOLDER_BASE_URL + comment.user.avatar
+              : images.sampleUserImage
+          }
           alt="user img"
         />
         <div className="flex flex-1 flex-col">
-          <h4 className="font-semibold text-xs lg:text-sm">{comment.user.name}</h4>
+          <h4 className="font-semibold text-xs lg:text-sm">
+            {comment.user.name}
+          </h4>
           <span className="text-xs text-dark-light">
             {new Date(comment.createdAt).toLocaleDateString("en-US", {
               month: "short",
@@ -49,7 +57,7 @@ export default function Comments({
             })}
           </span>
           {!isEditing && (
-            <p className="mt-[10px] text-dark-light text-xs">{comment.desc}</p>
+            <p className="mt-[10px] text-dark-light text-xs lg:text-sm">{comment.desc}</p>
           )}
           {isEditing && (
             <CommentForm
@@ -62,23 +70,23 @@ export default function Comments({
           <div className="mt-5 flex gap-x-4 text-dark-light font-roboto my-3 text-sm">
             {loginUserId && (
               <button
-              className="flex items-center space-x-2"
-              onClick={() =>
-                setAffectedComment({ type: "replying", _id: comment._id })
-              }
-            >
+                className="flex items-center space-x-2"
+                onClick={() =>
+                  setAffectedComment({ type: "replying", _id: comment._id })
+                }
+              >
                 <LuMessageSquare className="w-4 h-auto" />
                 <span className="">Reply</span>
               </button>
             )}
             {commentBelongsToUser && (
               <>
-                 <button
-                className="flex items-center space-x-1"
-                onClick={() =>
-                  setAffectedComment({ type: "editing", _id: comment._id })
-                }
-              >
+                <button
+                  className="flex items-center space-x-1"
+                  onClick={() =>
+                    setAffectedComment({ type: "editing", _id: comment._id })
+                  }
+                >
                   <FaPencilAlt className="w-3 h-auto" />
                   <span className="">Edit</span>
                 </button>
@@ -107,17 +115,17 @@ export default function Comments({
             <div>
               {replies.map((reply) => (
                 <Comments
-                key={reply._id}
-                addComment={addComment}
-                affectedComment={affectedComment}
-                setAffectedComment={setAffectedComment}
-                comment={reply}
-                deleteComment={deleteComment}
-                loginUserId={loginUserId}
-                replies={[]}
-                updateComment={updateComment}
-                parentId={comment._id}
-              />
+                  key={reply._id}
+                  addComment={addComment}
+                  affectedComment={affectedComment}
+                  setAffectedComment={setAffectedComment}
+                  comment={reply}
+                  deleteComment={deleteComment}
+                  loginUserId={loginUserId}
+                  replies={[]}
+                  updateComment={updateComment}
+                  parentId={comment._id}
+                />
               ))}
             </div>
           )}
