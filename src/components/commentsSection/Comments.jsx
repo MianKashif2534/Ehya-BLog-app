@@ -67,10 +67,10 @@ export default function Comments({
               initialText={comment.desc}
             />
           )}
-          <div className="mt-5 flex gap-x-4 text-dark-light font-roboto my-3 text-sm">
+          <div className="mt-5 flex gap-x-1 md:gap-x-4 text-dark-light font-roboto my-2 text-sm">
             {loginUserId && (
               <button
-                className="flex items-center space-x-2"
+                className="flex items-center space-x-1"
                 onClick={() =>
                   setAffectedComment({ type: "replying", _id: comment._id })
                 }
@@ -80,9 +80,9 @@ export default function Comments({
               </button>
             )}
             {commentBelongsToUser && (
-              <>
+              <div className="flex md:gap-x-4">
                 <button
-                  className="flex items-center space-x-1"
+                  className="flex space-x-1 items-center"
                   onClick={() =>
                     setAffectedComment({ type: "editing", _id: comment._id })
                   }
@@ -91,7 +91,7 @@ export default function Comments({
                   <span className="">Edit</span>
                 </button>
                 <button
-                  className="flex items-center space-x-1"
+                  className="flex space-x-1 items-center"
                   onClick={() => {
                     deleteComment(comment._id);
                   }}
@@ -99,7 +99,7 @@ export default function Comments({
                   <FaTrashCan className="w-3 h-auto" />
                   <span className="">Delete</span>
                 </button>
-              </>
+              </div>
             )}
           </div>
           {isReplying && (

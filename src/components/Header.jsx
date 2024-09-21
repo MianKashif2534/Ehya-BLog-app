@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 const navItemInfo = [
   { name: "Home", type: "link", href: "/" },
-  { name: "Articles", type: "link" , href : "/articles" },
+  { name: "Articles", type: "link", href: "/articles" },
   {
     name: "Pages",
     type: "dropdown",
@@ -138,18 +138,27 @@ function Header() {
                       profiledropdown ? "block" : "hidden"
                     } lg:hidden transition-all duration-500 pt-4 lg:absolute lg:right-0 lg:bottom-0 lg:transform lg:translate-y-full lg:group-hover:block w-max`}
                   >
-                    <ul className="bg-dark-soft lg:bg-transparent flex flex-col shadow-lg rounded-lg overflow-hidden cursor-pointer">
+                    <ul className="bg-white lg:bg-transparent flex flex-col shadow-lg rounded-lg overflow-hidden cursor-pointer">
+                      {userState.userInfo.admin && (
+                        <button
+                          onClick={() => navigate("/admin")}
+                          type="button"
+                          className="hover:bg-dark-soft hover:text-white text-dark-hard px-3 py-1 w-[165px]"
+                        >
+                          Admin Dashboard
+                        </button>
+                      )}
                       <button
                         onClick={() => navigate("/profile")}
                         type="button"
-                        className="hover:bg-dark-hard hover:text-white px-3 py-1 text-white lg:bg-dark-soft w-[120px]"
+                        className="hover:bg-dark-soft hover:text-white px-3 py-1 text-dark-hard w-[165px]"
                       >
                         Profile Page
                       </button>
                       <button
                         type="button"
                         onClick={logoutHandler}
-                        className="hover:bg-dark-hard hover:text-white px-3 py-1 text-white lg:bg-dark-soft w-[120px]"
+                        className="hover:bg-dark-soft hover:text-white px-3 py-1 text-dark-hard w-[165px]"
                         href="/"
                       >
                         Logout

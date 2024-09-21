@@ -28,8 +28,8 @@ function Ariticles() {
                 className="w-full md:w-[calc(50%-20px)] lg:w-[calc(33%-21px)]"
               />
             ))
-          : isError ? <ErrorMessage message="Couldn'y get the posts"/> 
-          : data.map((post) => (
+          : isError ? <ErrorMessage message="Couldn't get the posts"/> 
+          : data?.data.map((post) => (
               <AriticleCard
                 key={post._id}
                 post={post}

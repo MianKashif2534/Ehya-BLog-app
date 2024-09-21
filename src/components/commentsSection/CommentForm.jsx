@@ -15,6 +15,7 @@ const CommentForm = ({
     e.preventDefault();
     formSubmitHandler(value);
     setValue("");
+    // setIsFormVisible((prevState)=>!prevS)
   };
 
   return (

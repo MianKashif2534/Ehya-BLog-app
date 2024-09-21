@@ -7,7 +7,7 @@ import SuggestedPost from "./container/SuggestedPost";
 import CommentContainer from "../../components/commentsSection/CommentContainer";
 import SocialShareButtons from "../../components/SocialShareButtons";
 import { useQuery } from "@tanstack/react-query";
-import { getSinglePost } from "../../services/index/posts.js";
+import { getallPosts, getSinglePost } from "../../services/index/posts.js";
 import stables from "../../constants/stables.js";
 import ArticleDetailSkeleton from "./container/commponents/ArticleDetailSkeleton.jsx";
 import ErrorMessage from "../../components/ErrorMessage.jsx";
@@ -17,65 +17,40 @@ function ArticlesDetails() {
   const [breadCrumbsData, setBreadCrumbsData] = useState([
     { name: "Home", link: "/" },
     { name: "Blog", link: "/blog" },
-    { name: "Article Title", link: "/blog/1" },
+    { name: "Article Title", link: "/blog/" },
   ]);
-
-  const postData = [
-    {
-      _id: 1,
-      title: "Help children get better education",
-      createdAt: new Date(),
-      image: images.post1image,
-    },
-    {
-      _id: 2,
-      title: "Help children get better education",
-      createdAt: new Date(),
-      image: images.post1image,
-    },
-    {
-      _id: 3,
-      title: "Help children get better education",
-      createdAt: new Date(),
-      image: images.post1image,
-    },
-    {
-      _id: 4,
-      title: "Help children get better education",
-      createdAt: new Date(),
-      image: images.post1image,
-    },
-  ];
-
-  const tags = [
-    "Medical",
-    "Lifestyle",
-    "Learn",
-    "Healthy",
-    "Food",
-    "Diet",
-    "Education",
-  ];
 
   const { slug } = useParams();
   // console.log(slug);
-  const { data, isError, isLoading } = useQuery({
-    queryKey: ["singlePost", slug],
+  const { data, isError, isLoading  } = useQuery({
+    queryKey: ["blog", slug],
     queryFn: () => getSinglePost({ slug }),
     onSuccess: (data) => {
-      console.log("Post data:", data);
-      setBreadCrumbsData([
-        { name: "Home", link: "/" },
-        { name: "Blog", link: "/blog" },
-        { name: data.title, link: `/blog/${data.slug}` },
-      ]);
+      try {
+        // console.log("Post data inside onSuccess:", data);
+        setBreadCrumbsData([
+          { name: "Home", link: "/" },
+          { name: "Blog", link: "/blog" },
+          { name: "Article title", link: `/blog/${data.slug}` },
+        ]);
+      } catch (error) {
+        console.error("Error inside onSuccess:", error);
+      }
+    }
+    ,
+    onError: (error) => {
+      console.error("Error fetching post:", error.message);
     },
+    
+  });
+  // console.log("Query Status:", { isLoading, isError, isSuccess, data });
+  const { data  : postData } = useQuery({
+    queryKey: ["Post"],
+    queryFn: () => getallPosts(),
     onError: (error) => {
       console.error("Error fetching post:", error.message);
     },
   });
-
-  // console.log("Query Status:", { isLoading, isError, isSuccess, data });
 
   const userState = useSelector((state) => state.user);
 
@@ -127,8 +102,8 @@ function ArticlesDetails() {
             <div>
               <SuggestedPost
                 header="Latest Article"
-                post={postData}
-                tags={tags}
+                post={postData?.data}
+                tags={data?.tags}
                 className={"mt-10 lg:mt-0 lg:max-w-xs"}
               />
               <div className="mt-5">
@@ -137,9 +112,9 @@ function ArticlesDetails() {
                 </h2>
                 {/* encodeURI convert invalid characters into utf-8 format */}
                 <SocialShareButtons
-                  url={encodeURI("https://developers.facebook.com/")}
+                  url={encodeURI(window.location.href)}
                   title={encodeURIComponent(
-                    "Client and server side rendering explanation"
+                    data.title
                   )}
                 />
               </div>

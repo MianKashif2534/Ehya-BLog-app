@@ -16,7 +16,7 @@ function ProfilePage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const userState = useSelector((state) => state.user);
-
+  
   const {
     data: profileData,
     isLoading: profileLoading,
