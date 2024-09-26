@@ -12,6 +12,7 @@ import stables from "../../constants/stables.js";
 import ArticleDetailSkeleton from "./container/commponents/ArticleDetailSkeleton.jsx";
 import ErrorMessage from "../../components/ErrorMessage.jsx";
 import { useSelector } from "react-redux";
+import parseJsonToHtml from "../../utis/parseJsonToHtml.js";
 
 function ArticlesDetails() {
   const [breadCrumbsData, setBreadCrumbsData] = useState([
@@ -19,8 +20,9 @@ function ArticlesDetails() {
     { name: "Blog", link: "/blog" },
     { name: "Article Title", link: "/blog/" },
   ]);
-
+ 
   const { slug } = useParams();
+  const [body, setbody] = useState(null)
   // console.log(slug);
   const { data, isError, isLoading  } = useQuery({
     queryKey: ["blog", slug],
@@ -35,7 +37,8 @@ function ArticlesDetails() {
         ]);
       } catch (error) {
         console.error("Error inside onSuccess:", error);
-      }
+      } 
+      setbody(parseJsonToHtml(data?.body))
     }
     ,
     onError: (error) => {
@@ -96,7 +99,7 @@ function ArticlesDetails() {
                 {data.title}
               </h1>
               <div className="text-dark-soft mt-5">
-                <p className="leading-7 md:leading-8">{data.caption}</p>
+                <p className="leading-7 md:leading-8">{data.body}</p>
               </div>
             </article>
             <div>
@@ -134,3 +137,6 @@ function ArticlesDetails() {
 }
 
 export default ArticlesDetails;
+
+
+

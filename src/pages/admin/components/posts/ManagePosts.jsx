@@ -213,7 +213,7 @@ function ManagePosts() {
                             Delete
                           </button>
                           <Link
-                            to="/"
+                            to={`/admin/posts/manage/${post?.slug}`}
                             className="text-green-600 hover:text-green-900"
                           >
                             Edit

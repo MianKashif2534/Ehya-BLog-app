@@ -1,3 +1,4 @@
+//pagination
 import React from "react";
 import { usePagination, DOTS } from "../hooks/usePagination";
 
