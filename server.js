@@ -7,6 +7,9 @@ import userRouter from './routes/userRouter.js'
 import postRouter from './routes/postRouters.js'
 import commentRouter from './routes/commentRouter.js'
 import { errorResponserHandler, invalidPathHandler } from "./middleware/errorHandler.js";
+import categoryRouter from './routes/categoryRouter.js'
+
+
 import cors from 'cors'
 
 // Initialize dotenv and connect to the database
@@ -32,6 +35,7 @@ app.get("/", (req, res) => {
 app.use("/api/users", userRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/comments", commentRouter);
+app.use("/api/post-categories", categoryRouter);
 
 // Serve static files (uploads)
 app.use('/uploads', express.static(path.join(__dirname, "/uploads")));

@@ -42,7 +42,6 @@ const updatePost = async (req, res, next) => {
     //   return;
     // }
     const handleUpdatePostData = async (data) => {
-
       const { title, caption, slug, body, tags, categories } = JSON.parse(data);
       post.title = title || post.title;
       post.caption = caption || post.caption;
@@ -109,13 +108,16 @@ const deletePost = async (req, res, next) => {
   }
 };
 
-
 const getPost = async (req, res, next) => {
   try {
     let post = await Post.findOne({ slug: req.params.slug }).populate([
       {
         path: "user",
         select: ["avatar", "name"],
+      },
+      {
+        path: "categories",
+        select: ["title"],
       },
       {
         path: "comments",
@@ -184,6 +186,10 @@ const getAllPost = async (req, res, next) => {
         {
           path: "user",
           select: ["avatar", "name", "verified"],
+        },
+        {
+          path: "categories",
+          select: ["title"],
         },
       ])
       .sort({ updatedAt: "desc" });

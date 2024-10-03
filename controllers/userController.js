@@ -38,7 +38,6 @@ export const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
-    console.log("Request body:", req.body);
     if (!user) {
       const error = new Error("Email not found");
       error.statusCode = 404;

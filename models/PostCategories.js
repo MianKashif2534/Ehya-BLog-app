@@ -3,7 +3,7 @@ import { Schema, model } from "mongoose";
 
 const PostCategoriesSchema = new Schema(
   {
-    name: {
+    title: {
       type: String,
       required: true,
     },
