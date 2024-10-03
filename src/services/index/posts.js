@@ -50,7 +50,7 @@ export const deletePost = async ({ slug, token }) => {
   }
 };
 // UpdatePost
-export const UpdatePost = async ({ updateData, slug, token }) => {
+export const UpdatePost = async ({ slug, updateData ,token }) => {
   try {
     const config = {
       headers: {
@@ -58,6 +58,25 @@ export const UpdatePost = async ({ updateData, slug, token }) => {
       },
     };
     const { data } = await axios.put(`/api/posts/${slug}`, updateData, config);
+    // console.log("Axios response data:", data);
+    return data;
+  } catch (error) {
+    if (error.response && error.response.data.message) {
+      throw new Error(error.response.data.message);
+    }
+    throw new Error(error.message);
+  }
+};
+
+
+export const createPost = async ({ token }) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const { data } = await axios.post(`/api/posts/`,{}, config);
     // console.log("Axios response data:", data);
     return data;
   } catch (error) {

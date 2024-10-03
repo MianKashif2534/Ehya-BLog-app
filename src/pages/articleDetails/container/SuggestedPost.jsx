@@ -22,8 +22,8 @@ function SuggestedPost({ className, header, post = [], tags }) {
                 <img
                   className="aspect-sqaure object-cover rounded-lg w-1/5 lg:w-1/3"
                   src={
-                    item?.image
-                      ? stables.UPLOAD_FOLDER_BASE_URL + item?.image
+                    item?.photo
+                      ? stables.UPLOAD_FOLDER_BASE_URL + item?.photo
                       : images.samplePostImage
                   }
                   alt={item.title}

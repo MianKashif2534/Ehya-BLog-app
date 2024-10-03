@@ -137,11 +137,13 @@ function ManagePosts() {
                         ...loading
                       </td>
                     </tr>
-                  ) : postData?.data?.length === 0 ? <tr>
-                  <td colSpan={5} className="w-full py-10 text-center">
-                  No post found
-                  </td>
-                </tr>: (
+                  ) : postData?.data?.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="w-full py-10 text-center">
+                        No post found
+                      </td>
+                    </tr>
+                  ) : (
                     postData?.data.map((post, index) => (
                       <tr key={index}>
                         <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
@@ -170,7 +172,17 @@ function ManagePosts() {
                         <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
                           <p className="text-gray-900 whitespace-no-wrap">
                             {post.categories && post.categories.length > 0
-                              ? post.categories[0]
+                              ? post.categories
+                                  .slice(0, 3)
+                                  .map(
+                                    (category, index) =>
+                                      `${category.title}${
+                                        post.categories.slice(0, 3).length ===
+                                        index + 1
+                                          ? ""
+                                          : ", "
+                                      }`
+                                  )
                               : "Uncategorized"}
                           </p>
                         </td>
@@ -213,7 +225,7 @@ function ManagePosts() {
                             Delete
                           </button>
                           <Link
-                            to={`/admin/posts/manage/${post?.slug}`}
+                            to={`/admin/posts/manage/edit/${post?.slug}`}
                             className="text-green-600 hover:text-green-900"
                           >
                             Edit

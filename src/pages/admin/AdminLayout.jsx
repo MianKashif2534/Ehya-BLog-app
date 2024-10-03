@@ -10,7 +10,7 @@ function AdminLayout() {
   const userState = useSelector((state) => state.user);
   const navigate = useNavigate();
 
-  const { data: profileData, isLoading: profileLoading } = useQuery({
+  const { isLoading: profileLoading } = useQuery({
     queryKey: ["profile"],
     queryFn: () => {
       return getUserProfile({ token: userState.userInfo.token });
@@ -34,7 +34,7 @@ function AdminLayout() {
     </div>
   }
   return (
-    <div className="flex flex-col lg:flex-row h-screen">
+    <div className="flex flex-col lg:flex-row min-h-screen">
       <Header />
       <main className="bg-[#f9f9f9] flex-1 p-4 lg:p-4">
         <Outlet />

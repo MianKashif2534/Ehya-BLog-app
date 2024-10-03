@@ -9,50 +9,52 @@ import { AiFillDashboard } from "react-icons/ai";
 import NavItem from "../NavItem";
 import NavItemCollapse from "../NavItemCollapse";
 import { useWindowSize } from "@uidotdev/usehooks";
-
-const MENU_ITEMS = [
-  {
-    title: "Dashboard",
-    name: "dashboard",
-    link: "/admin",
-    type: "link",
-    icon: <AiFillDashboard className="text-xl" />,
-  },
-  {
-    title: "Comments",
-    name: "comments",
-    link: "/admin/comments",
-    type: "link",
-    icon: <FaComments className="text-xl" />,
-  },
-  {
-    title: "Posts",
-    name: "posts",
-    content: [
-      { title: "New", link: "/admin/posts/new" },
-      { title: "Manage", link: "/admin/posts/manage" },
-    ],
-    type: "collapse",
-    icon: <MdDashboard className="text-xl" />,
-  },
-];
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { createPost } from "../../../../services/index/posts";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
   const [isMenuActive, setIsMenuActive] = useState(false);
   const [activeNavName, setActiveNavName] = useState("dashboard");
+  const userState = useSelector((state) => state.user);
   const windowSize = useWindowSize();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate()
   // console.log(activeNavName)
+
+  const { mutate: mutateCreatePost, isLoading: isLoadingCreatePost } =
+    useMutation({
+      mutationFn: ({ updateData, slug, token }) => {
+        return createPost({ updateData, slug, token });
+      },
+      onSuccess: (data) => {
+        queryClient.invalidateQueries(["posts"]);
+        toast.success("Post is Created");
+        navigate(`/admin/posts/manage/edit/${data.slug}`)
+        console.log(data)
+      },
+      onError: (error) => {
+        toast.error(error.message);
+        console.log(error.message);
+      },
+    });
 
   useEffect(() => {
     if (windowSize.width >= 1024) {
-      setIsMenuActive(true); 
+      setIsMenuActive(true);
     } else {
-      setIsMenuActive(false); 
+      setIsMenuActive(false);
     }
   }, [windowSize.width]);
-  
+
   const toggleMenuHandler = () => {
     setIsMenuActive((prevState) => !prevState);
+  };
+
+  const handleCreatePost = ({ token }) => {
+    mutateCreatePost({ token });
   };
 
   return (
@@ -85,30 +87,40 @@ function Header() {
 
             <h4 className="text-[#C7C7C7] mt-10 font-bold">MAIN MENU</h4>
             <div className="flex flex-col gap-y-[0.563rem] mt-7">
-              {MENU_ITEMS.map((item, index) =>
-                item.type === "link" ? (
-                  <NavItem
-                    title={item.title}
-                    icon={item.icon}
-                    link={item.link}
-                    name={item.name}
-                    key={index}
-                    activeNavName={activeNavName}
-                    setActiveNavName={setActiveNavName}
-                  />
-                ) : (
-                  <NavItemCollapse
-                    title={item.title}
-                    icon={item.icon}
-                    link={item.link}
-                    name={item.name}
-                    key={index}
-                    activeNavName={activeNavName}
-                    setActiveNavName={setActiveNavName}
-                    content={item.content}
-                  />
-                )
-              )}
+              <NavItem
+                title="Dashboard"
+                icon={<AiFillDashboard className="text-xl" />}
+                link="/admin"
+                name="dashboard"
+                activeNavName={activeNavName}
+                setActiveNavName={setActiveNavName}
+              />
+              <NavItem
+                title="Comments"
+                icon={<FaComments className="text-xl" />}
+                link="/admin/comments"
+                name="comments"
+                activeNavName={activeNavName}
+                setActiveNavName={setActiveNavName}
+              />
+              <NavItemCollapse
+                title="Posts"
+                icon={<MdDashboard className="text-xl" />}
+                name="post"
+                activeNavName={activeNavName}
+                setActiveNavName={setActiveNavName}
+              >
+                <Link to="/admin/posts/manage">Manage All Posts</Link>
+                <button
+                  disabled={isLoadingCreatePost}
+                  className="text-start disabled:opacity-40 disabled:cursor-not-allowed"
+                  onClick={() =>
+                    handleCreatePost({ token: userState.userInfo.token })
+                  }
+                >
+                  Create Post
+                </button>
+              </NavItemCollapse>
             </div>
           </div>
         </div>
