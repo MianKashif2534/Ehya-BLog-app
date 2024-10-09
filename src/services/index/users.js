@@ -91,20 +91,47 @@ export const updateProfilePicture = async ({ token, formData }) => {
   }
 };
 
+export const getAllUsers = async (
+  token,
+  searchKeyword = "",
+  page = 1,
+  pageSize = 10
+) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const { data, headers } = await axios.get(
+      `/api/users?searchKeyword=${searchKeyword}&page=${page}&limit=${pageSize}`,
+      config
+    );
+    // console.log(data);
+    return { data, headers };
+  } catch (error) {
+    if (error.response && error.response.data.message) {
+      throw new Error(error.response.data.message);
+    }
+    throw new Error(error.message);
+  }
+};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export const deleteUser = async ({ slug, token }) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    // console.log("object")
+    const { data  } = await axios.delete(`/api/users/${slug}`, config);
+    // console.log("Axios response data:", data);
+    return data;
+  } catch (error) {
+    if (error.response && error.response.data.message) {
+      throw new Error(error.response.data.message);
+    }
+    throw new Error(error.message);
+  }
+};

@@ -24,7 +24,7 @@ export const useDataTable = ({
 
   const { mutate: mutateDeletePost, isLoading: isLoadingDeleteData } =
     useMutation({
-    //   queryKey: ["profile"],
+      //   queryKey: ["profile"],
       mutationFn: mutateDeleteFn,
       onSuccess: (data) => {
         queryClient.invalidateQueries([dataQueryKey]);
@@ -50,7 +50,9 @@ export const useDataTable = ({
   };
 
   const deleteDataHandler = ({ slug, token }) => {
-    mutateDeletePost({ slug, token });
+    if (window.confirm("Do you want to delete this record?")) {
+      mutateDeletePost({ slug, token });
+    }
   };
   const submitSearchHandler = (e) => {
     e.preventDefault();
@@ -69,6 +71,6 @@ export const useDataTable = ({
     searchKeywordHandler,
     submitSearchHandler,
     deleteDataHandler,
-    setCurrentPage
+    setCurrentPage,
   };
 };

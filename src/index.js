@@ -10,6 +10,14 @@ import { Provider } from "react-redux";
 // Initialize QueryClient
 const client = new QueryClient();
 
+// const client = new QueryClient({
+//   defaultOptions: {
+//     queries: {
+//       refetchOnWindowFocus: false,
+//     },
+//   },
+// });
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>

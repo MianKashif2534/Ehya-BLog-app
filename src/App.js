@@ -13,6 +13,7 @@ import ManagePosts from "./pages/admin/components/posts/ManagePosts";
 import EditPost from "./pages/admin/components/posts/EditPost";
 import Categories from "./pages/admin/screens/categories/Categories";
 import EditCategory from "./pages/admin/screens/categories/EditCategory";
+import User from "./pages/admin/components/user/User";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="posts/manage/edit/:slug" element={<EditPost />} />
           <Route path="categories/manage" element={< Categories/>} />
           <Route path="categories/manage/edit/:slug" element={<EditCategory />} />
+          <Route path="users/manage" element={<User />} />
         </Route>
       </Routes>
       <Toaster />
