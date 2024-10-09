@@ -19,7 +19,7 @@ import {
 } from "../../../../utis/multiSelectTagsUtils";
 
 const promiseOptions = async (inputValue) => {
-  const categoriesData = await getallCategories();
+  const {data : categoriesData} = await getallCategories();
   return filterCategories(inputValue, categoriesData);
 };
 

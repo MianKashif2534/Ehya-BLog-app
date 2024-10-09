@@ -32,7 +32,10 @@ export default function Comments({
   const replyOnUserId = comment.user._id;
   return (
     <>
-      <div className="flex flex-nowrap items-start gap-x-3 bg-[#F2F4F5] rounded-lg p-3">
+      <div
+        className="flex flex-nowrap items-start gap-x-3 bg-[#F2F4F5] rounded-lg p-3"
+        id={`comment-${comment?._id}`}
+      >
         <img
           className="w-9 h-9 object-cover rounded-full"
           src={
@@ -57,7 +60,9 @@ export default function Comments({
             })}
           </span>
           {!isEditing && (
-            <p className="mt-[10px] text-dark-light text-xs lg:text-sm">{comment.desc}</p>
+            <p className="mt-[10px] text-dark-light text-xs lg:text-sm">
+              {comment.desc}
+            </p>
           )}
           {isEditing && (
             <CommentForm

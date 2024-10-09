@@ -10,6 +10,7 @@ export const getallPosts = async (
     const { data, headers } = await axios.get(
       `/api/posts?searchKeyword=${searchKeyword}&page=${page}&limit=${pageSize}`
     );
+    // console.log(data);
     return { data, headers };
   } catch (error) {
     if (error.response && error.response.data.message) {
@@ -50,7 +51,7 @@ export const deletePost = async ({ slug, token }) => {
   }
 };
 // UpdatePost
-export const UpdatePost = async ({ slug, updateData ,token }) => {
+export const UpdatePost = async ({ slug, updateData, token }) => {
   try {
     const config = {
       headers: {
@@ -68,7 +69,6 @@ export const UpdatePost = async ({ slug, updateData ,token }) => {
   }
 };
 
-
 export const createPost = async ({ token }) => {
   try {
     const config = {
@@ -76,7 +76,7 @@ export const createPost = async ({ token }) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    const { data } = await axios.post(`/api/posts/`,{}, config);
+    const { data } = await axios.post(`/api/posts/`, {}, config);
     // console.log("Axios response data:", data);
     return data;
   } catch (error) {

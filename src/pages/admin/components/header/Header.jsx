@@ -33,7 +33,6 @@ function Header() {
         queryClient.invalidateQueries(["posts"]);
         toast.success("Post is Created");
         navigate(`/admin/posts/manage/edit/${data.slug}`)
-        console.log(data)
       },
       onError: (error) => {
         toast.error(error.message);
@@ -120,6 +119,7 @@ function Header() {
                 >
                   Create Post
                 </button>
+                <Link to="/admin/categories/manage">Categories</Link>
               </NavItemCollapse>
             </div>
           </div>
