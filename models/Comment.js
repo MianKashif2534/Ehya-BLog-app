@@ -30,7 +30,7 @@ const CommentSchema = new Schema(
       ref: "User",
     },
   },
-  { timestamps: true , toJSON : {virtuals : true}}
+  { timestamps: true, toJSON: { virtuals: true } }
 );
 
 CommentSchema.virtual("replies", {
