@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { useDispatch, useSelector ,  } from "react-redux";
-import { useQuery , useQueryClient } from "@tanstack/react-query";
+import { useDispatch, useSelector } from "react-redux";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getUserProfile, updateProfile } from "../../services/index/users";
 import ProfilePictures from "../../components/ProfilePictures";
 import { userActions } from "../../store/reducers/userReducer";
@@ -16,29 +16,26 @@ function ProfilePage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const userState = useSelector((state) => state.user);
-  
-  const {
-    data: profileData,
-    isLoading: profileLoading,
 
-  } = useQuery({
+  const { data: profileData, isLoading: profileLoading } = useQuery({
     queryKey: ["profile"],
     queryFn: () => {
       return getUserProfile({ token: userState.userInfo.token });
     },
   });
 
-  const { mutate, isLoading : profilePictureUploading} = useMutation({
+  const { mutate, isLoading: profilePictureUploading } = useMutation({
     mutationFn: ({ name, email, password }) => {
       return updateProfile({
         token: userState.userInfo.token,
         userData: { name, email, password },
+        userId: userState.userInfo._id,
       });
     },
     onSuccess: (data) => {
       dispatch(userActions.setUserInfo(data));
       localStorage.setItem("account", JSON.stringify(data));
-      queryClient.invalidateQueries(["profile"])
+      queryClient.invalidateQueries(["profile"]);
       toast.success("Profile is Updated");
     },
     onError: (error) => {
@@ -62,8 +59,8 @@ function ProfilePage() {
     mode: "onChange", // "onChange" mode validates on input change
   });
   const submithandler = (data) => {
-    const {name , email ,password} = data
-    mutate({name , email ,password})
+    const { name, email, password } = data;
+    mutate({ name, email, password });
   };
   useEffect(() => {
     if (!userState.userInfo) {
@@ -71,7 +68,7 @@ function ProfilePage() {
     }
   }, [navigate, userState.userInfo]);
 
-//  console.log("profileData",profileData)
+  //  console.log("profileData",profileData)
 
   return (
     <Mainlayout>
@@ -79,7 +76,6 @@ function ProfilePage() {
         <div className="w-full max-w-sm mx-auto">
           <ProfilePictures avatar={profileData?.avatar} />
           <form className="" action="" onSubmit={handleSubmit(submithandler)}>
-
             <div className="flex flex-col mx-auto mb-6 text-sm">
               <label
                 htmlFor="name"

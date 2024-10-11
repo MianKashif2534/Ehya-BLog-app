@@ -1,8 +1,14 @@
 import React from "react";
-import { deleteUser, getAllUsers } from "../../../../services/index/users";
+import {
+  deleteUser,
+  getAllUsers,
+  updateProfile,
+} from "../../../../services/index/users";
 import { useDataTable } from "../../../../hooks/useDataTable";
 import DataTables from "../DataTables";
 import { images, stables } from "../../../../constants";
+import toast from "react-hot-toast";
+import { useMutation } from "@tanstack/react-query";
 
 function User() {
   const {
@@ -31,6 +37,35 @@ function User() {
     },
   });
 
+  const { mutate: mutateUpdateUser, isLoading: isLoadingUser } = useMutation({
+    mutationFn: ({ isAdmin, userId }) => {
+      return updateProfile({
+        token: userState.userInfo.token,
+        userData: { admin: isAdmin },
+        userId,
+      });
+    },
+    onSuccess: (data) => {
+      // console.log("Post updated successfully: ", data);
+      queryClient.invalidateQueries(["users"]);
+      toast.success("User is updated");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+      console.log(error.message);
+    },
+  });
+
+  const handleAdminCheck = (event, userId) => {
+    const intialCheckValue = !event.target.checked;
+    if (
+      window.confirm("Do you want to change the Admin Status of this user?")
+    ) {
+      mutateUpdateUser({ isAdmin: event.target.checked, userId });
+    } else {
+      event.target.checked = intialCheckValue;
+    }
+  };
   return (
     <DataTables
       pageTitle={"Manage Users"}
@@ -94,10 +129,14 @@ function User() {
               {user.verified ? "✅" : "❌"}
             </p>
           </td>
-          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-            <p className="text-gray-900 whitespace-no-wrap text-center">
-              {user.admin ? "✅" : "❌"}
-            </p>
+          <td className="px-5 py-5 text-sm bg-white border-b text-center border-gray-200">
+            <input
+              type="checkbox"
+              className="checkbox disabled:bg-orange-400 disabled:opacity-90 checked:bg-[url('../public/images/check.png')] bg-cover checked:disabled:bg-none "
+              defaultChecked={user.admin}
+              onChange={(event) => handleAdminCheck(event, user._id)}
+              disabled={isLoadingUser}
+            />
           </td>
           <td className="space-x-6 px-5 py-5 text-sm bg-white border-b border-gray-200">
             <button
