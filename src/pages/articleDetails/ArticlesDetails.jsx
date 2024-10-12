@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Mainlayout from "../../components/Mainlayout";
 import BreadCrumb from "../../components/BreadCrumb";
 import images from "../../constants/images";
@@ -21,7 +21,7 @@ import Editor from "../../components/editor/Editor.jsx";
 //     { name: "Blog", link: "/blog" },
 //     { name: "Article Title", link: "/blog/" },
 //   ]);
- 
+
 //   const { slug } = useParams();
 //   const [body, setbody] = useState(null)
 //   // console.log(slug);
@@ -42,17 +42,17 @@ import Editor from "../../components/editor/Editor.jsx";
 //         //   { name: "Blog", link: "/blog" },
 //         //   { name: data.title, link: `/blog/${data.slug}` },
 //         // ]);
-        
+
 //       } catch (error) {
 //         console.error("Error inside onSuccess:", error);
-//       } 
+//       }
 //       setbody(parseJsonToHtml(data?.body))
 //     }
 //     ,
 //     onError: (error) => {
 //       console.error("Error fetching post:", error.message);
 //     },
-    
+
 //   });
 //   // console.log("Query Status:", { isLoading, isError, isSuccess, data });
 //   const { data  : postData } = useQuery({
@@ -88,7 +88,7 @@ import Editor from "../../components/editor/Editor.jsx";
 //                 // src={
 //                 //   data?.photo
 //                 //     ? stables.UPLOAD_FOLDER_BASE_URL | data?.photo
-//                 //     : images.samplePostImage 
+//                 //     : images.samplePostImage
 //                 // }
 //                 src={
 //                   data?.photo
@@ -158,10 +158,10 @@ function ArticlesDetails() {
     { name: "Blog", link: "/blog" },
     { name: "Article Title", link: "/blog/" },
   ]);
- 
+
   const { slug } = useParams();
-  const [body, setBody] = useState(null);  // Initialize the state for the post body
-  
+  const [body, setBody] = useState(null); // Initialize the state for the post body
+
   const { data, isError, isLoading } = useQuery({
     queryKey: ["blog", slug],
     queryFn: () => getSinglePost({ slug }),
@@ -171,11 +171,11 @@ function ArticlesDetails() {
         setBreadCrumbsData([
           { name: "Home", link: "/" },
           { name: "Blog", link: "/blog" },
-          { name: data.title, link: `/blog/${data.slug}` },
+          { name: data?.title, link: `/blog/${data?.slug}` },
         ]);
 
         // Parse body content if needed
-        // setBody(parseJsonToHtml(data?.body)); 
+        // setBody(parseJsonToHtml(data?.body));
         setBody(parseJsonToHtml(data?.body)); // Assuming this converts JSON to valid HTML
       } catch (error) {
         console.error("Error inside onSuccess:", error);
@@ -194,14 +194,17 @@ function ArticlesDetails() {
     },
   });
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const userState = useSelector((state) => state.user);
 
   return (
     <Mainlayout>
       {isLoading ? (
-        <ArticleDetailSkeleton />  // Loading state
+        <ArticleDetailSkeleton /> // Loading state
       ) : isError ? (
-        <ErrorMessage message="Couldn't fetch Post details" />  // Error state
+        <ErrorMessage message="Couldn't fetch Post details" /> // Error state
       ) : (
         <section className="container mx-auto max-w-5xl flex flex-col p-5 lg:gap-x-5">
           {/* Article and Suggested Posts */}
@@ -234,8 +237,6 @@ function ArticlesDetails() {
               <h1 className="text-xl font-medium font-roboto mt-4 text-dark-hard md:text-2xl">
                 {data.title}
               </h1>
-
-              
             </article>
 
             <div>
@@ -258,12 +259,16 @@ function ArticlesDetails() {
             </div>
           </div>
           <div className="w-full">
-              {!isLoading && !isError && (
-                <Editor content={data.body} editable={false} onDataChange={(data) => {
+            {!isLoading && !isError && (
+              <Editor
+                content={data.body}
+                editable={false}
+                onDataChange={(data) => {
                   setBody(data);
-                }} />
-              )}
-            </div>
+                }}
+              />
+            )}
+          </div>
 
           {/* Comments Section */}
           <CommentContainer
@@ -279,7 +284,3 @@ function ArticlesDetails() {
 }
 
 export default ArticlesDetails;
-
-
-
-
