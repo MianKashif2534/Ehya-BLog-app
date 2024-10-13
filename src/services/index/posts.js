@@ -4,11 +4,15 @@ import axios from "axios";
 export const getallPosts = async (
   searchKeyword = "",
   page = 1,
-  pageSize = 10
+  pageSize = 10,
+  categories
 ) => {
   try {
+    console.log("categoriesId",categories)
     const { data, headers } = await axios.get(
-      `/api/posts?searchKeyword=${searchKeyword}&page=${page}&limit=${pageSize}`
+      `/api/posts?searchKeyword=${searchKeyword}&page=${page}&limit=${pageSize}&categories=${categories.join(
+        ","
+      )}`
     );
     // console.log(data);
     return { data, headers };
@@ -19,6 +23,7 @@ export const getallPosts = async (
     throw new Error(error.message);
   }
 };
+
 
 export const getSinglePost = async ({ slug }) => {
   try {

@@ -1,5 +1,5 @@
 // BlogPage
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { getallPosts } from "../../services/index/posts";
 import { useQuery } from "@tanstack/react-query";
@@ -10,19 +10,39 @@ import Mainlayout from "../../components/Mainlayout";
 import Pagination from "../../components/Pagination";
 import { useSearchParams } from "react-router-dom";
 import SearchBar from "../../components/SearchBar";
+import AsyncMultiSelectTagDropdown from "../../components/SelectAsyncPaginate";
+import { filterCategories } from "../../utis/multiSelectTagsUtils";
+import { getallCategories } from "../../services/index/postcategories";
 
 let isFirstRun = true;
 
 function BlogPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const searchParamsValue = Object.fromEntries([...searchParams]);
+  const [categories, setCategories] = useState([]);
+  const promiseOptions = async (search, loadedOptions, { page }) => {
+    const { data: categoriesData, headers } = await getallCategories(
+      search,
+      page,
+      5
+    );
 
+    return {
+      options: filterCategories(search, categoriesData),
+      hasMore:
+        parseInt(headers["x-totalpagecount"]) !==
+        parseInt(headers["x-currentpage"]),
+      additional: {
+        page: page + 1,
+      },
+    };
+  };
   const currentPage = parseInt(searchParamsValue?.page) || 1;
   const searchKeyword = searchParamsValue?.search || "";
 
   const { data, isLoading, isError, refetch, isFetching } = useQuery({
-    queryKey: ["posts"],
-    queryFn: () => getallPosts(searchKeyword, currentPage, 12),
+    queryKey: ["posts", categories],
+    queryFn: () => getallPosts(searchKeyword, currentPage, 12, categories),
     onError: (error) => {
       toast.error(error.message);
       console.log(error);
@@ -45,15 +65,25 @@ function BlogPage() {
   const handleSearch = ({ searchKeyword }) => {
     setSearchParams({ page: 1, search: searchKeyword || "" });
   };
+
   return (
     <Mainlayout>
       <div
-        className={`container lg:justify-center mx-auto flex flex-col md:gap-x-5  px-5 py-10 `}
+        className={`container lg:justify-center mx-auto flex flex-col md:gap-x-5 px-5 py-10 `}
       >
-        <SearchBar
-          className={"w-full max-w-xl mb-10"}
-          onSearchKeyword={handleSearch}
-        />
+        <div className="flex flex-col mb-10 space-y-3 lg:space-y-0 lg:flex-row lg:items-center lg:gap-x-4">
+          <SearchBar
+            className={"w-full max-w-xl my-2"}
+            onSearchKeyword={handleSearch}
+          />
+          <AsyncMultiSelectTagDropdown
+            placeholder={"Search by Categories"}
+            loadOptions={promiseOptions}
+            onChange={(selectedValues) => {
+              setCategories(selectedValues.map((item) => item.value));
+            }}
+          />
+        </div>
         <div className="flex flex-wrap md:gap-x-5 gap-y-5 pb-10">
           {isLoading || isFetching ? (
             [...Array(3)].map((item, index) => (
