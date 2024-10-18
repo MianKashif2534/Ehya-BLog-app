@@ -138,7 +138,7 @@ function Header() {
                       profiledropdown ? "block" : "hidden"
                     } lg:hidden transition-all duration-500 pt-4 lg:absolute lg:right-0 lg:bottom-0 lg:transform lg:translate-y-full lg:group-hover:block w-max`}
                   >
-                    <ul className="bg-white lg:bg-transparent flex flex-col shadow-lg rounded-lg overflow-hidden cursor-pointer">
+                    <ul className="bg-white z-100  flex flex-col shadow-lg rounded-lg overflow-hidden cursor-pointer">
                       {userState.userInfo.admin && (
                         <button
                           onClick={() => navigate("/admin")}

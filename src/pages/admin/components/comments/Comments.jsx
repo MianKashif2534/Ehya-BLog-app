@@ -148,7 +148,7 @@ function Comments() {
               })}
             </p>
           </td>
-          <td className="space-x-6 px-5 py-5 text-sm bg-white border-b border-gray-200">
+          <td className="space-x-2 px-2 py-5 text-sm bg-white border-b border-gray-200">
             <button
               type="button"
               className={`${
@@ -181,39 +181,6 @@ function Comments() {
               Delete
             </button>
           </td>
-          {/* <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-            <div className="flex gap-x-2">
-              {post.tags?.length > 0
-                ? post.tags.map((tag, index) => (
-                    <p key={index}>
-                      {tag}
-                      {post.tags.length - 1 !== index && ","}
-                    </p>
-                  ))
-                : "No tags"}
-            </div>
-          </td>
-          <td className="space-x-6 px-5 py-5 text-sm bg-white border-b border-gray-200">
-            <button
-              type="button"
-              className="text-red-600 hover:text-red-900 disabled:opacity-40 disabled:cursor-not-allowed"
-              disabled={isLoadingDeleteData}
-              onClick={() =>
-                deleteDataHandler({
-                  slug: post?.slug,
-                  token: userState.userInfo.token,
-                })
-              }
-            >
-              Delete
-            </button>
-            <Link
-              to={`/admin/posts/manage/edit/${post?.slug}`}
-              className="text-green-600 hover:text-green-900"
-            >
-              Edit
-            </Link>
-          </td> */}
         </tr>
       ))}
     </DataTables>

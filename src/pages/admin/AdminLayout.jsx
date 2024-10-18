@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { getUserProfile } from "../../services/index/users";
+import { Bars } from "react-loader-spinner";
 
 function AdminLayout() {
   const userState = useSelector((state) => state.user);
@@ -28,10 +29,20 @@ function AdminLayout() {
     },
   });
 
-  if(profileLoading){
-    return <div className="w-full h-screen  flex justify-center items-center">
-      <h1 className="text-slate-700 text-2xl">Loading...</h1>
-    </div>
+  if (profileLoading) {
+    return (
+      <div className="w-full h-screen  flex justify-center items-center">
+        <Bars
+          height="50"
+          width="50"
+          color="#9ca3af"
+          ariaLabel="bars-loading"
+          wrapperStyle={{}}
+          wrapperClass="flex justify-center item-center"
+          visible={true}
+        />
+      </div>
+    );
   }
   return (
     <div className="flex flex-col lg:flex-row min-h-screen">

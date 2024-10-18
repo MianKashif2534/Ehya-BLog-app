@@ -233,10 +233,20 @@ function ArticlesDetails() {
                   </Link>
                 ))}
               </div>
-
               <h1 className="text-xl font-medium font-roboto mt-4 text-dark-hard md:text-2xl">
                 {data.title}
               </h1>
+              <div className="w-full">
+            {!isLoading && !isError && (
+              <Editor
+                content={data.body}
+                editable={false}
+                onDataChange={(data) => {
+                  setBody(data);
+                }}
+              />
+            )}
+          </div>
             </article>
 
             <div>
@@ -258,18 +268,7 @@ function ArticlesDetails() {
               </div>
             </div>
           </div>
-          <div className="w-full">
-            {!isLoading && !isError && (
-              <Editor
-                content={data.body}
-                editable={false}
-                onDataChange={(data) => {
-                  setBody(data);
-                }}
-              />
-            )}
-          </div>
-
+          
           {/* Comments Section */}
           <CommentContainer
             className={"mt-10"}

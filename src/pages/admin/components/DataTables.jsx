@@ -1,6 +1,7 @@
 // DataTables
 import React from "react";
 import Pagination from "../../../components/Pagination";
+import { Bars } from "react-loader-spinner";
 
 function DataTables({
   pageTitle,
@@ -69,7 +70,15 @@ function DataTables({
                   {isFetching || isLoading ? (
                     <tr>
                       <td colSpan={5} className="w-full py-10 text-center">
-                        ...loading
+                        <Bars
+                          height="30"
+                          width="50"
+                          color="#9ca3af"
+                          ariaLabel="bars-loading"
+                          wrapperStyle={{}}
+                          wrapperClass="flex justify-center item-center"
+                          visible={true}
+                        />
                       </td>
                     </tr>
                   ) : data?.length === 0 ? (
