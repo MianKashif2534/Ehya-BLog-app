@@ -34,6 +34,7 @@ function App() {
           <Route path="categories/manage" element={< Categories/>} />
           <Route path="categories/manage/edit/:slug" element={<EditCategory />} />
           <Route path="users/manage" element={<User />} />
+
         </Route>
       </Routes>
       <Toaster />
