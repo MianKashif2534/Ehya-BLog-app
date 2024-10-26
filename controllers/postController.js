@@ -24,7 +24,6 @@ const createPost = async (req, res, next) => {
     next(error);
   }
 };
-
 //postcontroller
 const updatePost = async (req, res, next) => {
   try {

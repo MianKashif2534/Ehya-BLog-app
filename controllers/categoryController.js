@@ -76,24 +76,6 @@ const getAllPostCategory = async (req, res, next) => {
   }
 };
 
-// const deletePostCategory = async (req, res, next) => {
-//   try {
-//     const categoryId = req.params.categoryId;
-//     console.log("Category ID: ", req.params.categoryId);
-
-//     await Post.updateMany(
-//       { categories: { $in: [categoryId] } },
-//       { $pull: { categories: categoryId } }
-//     );
-//     await PostCategories.deleteOne({ _id: categoryId });
-//     res.send({
-//       message: "Post is successfully deleted",
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
 const deletePostCategory = async (req, res, next) => {
   try {
     const categoryId = req.params.categoryId;

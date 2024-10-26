@@ -11,7 +11,6 @@ const CommentSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Post",
     },
-    // isVerified
     check: {
       type: Boolean,
       default: false,
